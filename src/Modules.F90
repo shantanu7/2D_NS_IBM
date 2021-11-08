@@ -1,0 +1,111 @@
+ MODULE GLOBAL
+
+ DOUBLE PRECISION, PARAMETER :: pi = ACOS(-1.0D0)
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: Uvar, f_Uvar
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:) :: xProbe, yProbe
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:) :: uProbe, vProbe, pProbe
+ DOUBLE PRECISION :: omega
+
+ INTEGER, ALLOCATABLE, DIMENSION(:,:) :: LOC_PROBE
+ INTEGER :: TECFREQ
+ INTEGER :: fMonBase, nProbe 
+
+ LOGICAL :: iIntlBody
+
+ END MODULE GLOBAL
+ !----------------------------------------------------------------------------!
+
+
+ MODULE MESH2D
+
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: xv, yv, xc, yc
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: xvg, yvg, xcg, ycg
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: dxcinv, dycinv
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: dxcinv_NC, dycinv_NC 
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: dxfinv, dyfinv
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: dxe2inv, dxw2inv, dyn2inv, dys2inv
+ DOUBLE PRECISION :: Xmin, Xmax, Ymin, Ymax, Lx, Ly
+ DOUBLE PRECISION :: dx, dy, dt, dtinv, ctime
+
+ INTEGER, ALLOCATABLE, DIMENSION(:,:,:) :: IC2NB, IC2NBG
+ INTEGER, ALLOCATABLE, DIMENSION(:,:) :: IC2CELG, ICELG2C
+ INTEGER, ALLOCATABLE, DIMENSION(:,:) :: IC2CEL, ICEL2C
+ INTEGER, ALLOCATABLE, DIMENSION(:,:) :: ibE, ibW, ibN, ibS
+ INTEGER, PARAMETER ::	NDIM = 2
+ INTEGER, PARAMETER ::  UNIFORM = 1, &
+						NON_UNIFORM = 2
+ INTEGER :: GRID_TYPE
+ INTEGER :: nxcg, nycg, nxg, nyg, nxc, nyc, nx, ny
+ INTEGER :: NCELL, NCELLG
+ INTEGER :: ITER, ITERMAX
+
+ LOGICAL :: SCALE_GRID = .FALSE.
+
+ END MODULE MESH2D
+ !----------------------------------------------------------------------------!
+
+
+ MODULE FLOW_PARAMS
+
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: uc, vc, pc
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: Uf, Vf
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: usr, vsr
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: Ufsr, Vfsr
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: FconU, FconV
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: FconU_old, FconV_old
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: FdifU, FdifV
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:,:) :: AmatV
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: rhsV, phiV, VBC
+
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: AmatVG, AmatPG
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: RHSVG
+ DOUBLE PRECISION :: uinit, vinit, pinit
+ DOUBLE PRECISION :: Re, Reinv
+ DOUBLE PRECISION :: BCVal(4)
+
+ INTEGER, PARAMETER ::	INLET 	= 1, &
+						OUTLET	= 2, &
+						NOSLIP	= 3
+ INTEGER, PARAMETER ::	NEUMANN   = 0, &
+						DIRICHLET = 1
+ INTEGER :: BCType(4)
+
+ END MODULE FLOW_PARAMS
+ !----------------------------------------------------------------------------!
+
+
+ MODULE POISSON_PARAMS
+
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:,:) :: Amat
+ DOUBLE PRECISION, ALLOCATABLE, DIMENSION (:) :: phi, rhs, PBC
+ DOUBLE PRECISION :: PBCVal(4)
+ DOUBLE PRECISION :: P_tol
+! DOUBLE PRECISION :: aP, aW, aE, aN, aS
+
+ INTEGER :: PBCType(4)
+ INTEGER :: PITERMAX
+
+ CHARACTER(LEN=5) :: P_Solver
+
+ LOGICAL :: pflag
+
+ END MODULE POISSON_PARAMS
+ !----------------------------------------------------------------------------!
+
+
+ MODULE IBM_PARAMS
+
+ DOUBLE PRECISION :: xcent, ycent, D_cyl
+
+ INTEGER, ALLOCATABLE, DIMENSION (:,:) :: IBLANK, GMAP
+ INTEGER, ALLOCATABLE, DIMENSION (:,:) :: IS2C, IGC2C
+ INTEGER, ALLOCATABLE, DIMENSION (:,:) ::  IGC2FNB
+ INTEGER, PARAMETER ::	FLUID		= 0, &
+						SOLID		= 1
+ INTEGER, PARAMETER ::	SQUARE		= 1, &
+						CIRCULAR	= 2
+ INTEGER :: CYLINDER_TYPE
+ INTEGER :: NSolid, NGC
+
+ END MODULE IBM_PARAMS
+ !----------------------------------------------------------------------------!
